@@ -26,7 +26,7 @@ int powerlogN(int n,int x)
     if(x%2==0)
         return temp*temp;
     else
-        return x*temp*temp;
+        return n*temp*temp;
 }
 
 int main()
