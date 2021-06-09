@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Level-Order Traversal/Level-Order Traversal in Spiral form
+
 struct Node
 {
     int data;
@@ -16,45 +18,32 @@ struct Node
     }
 };
 
-int height(Node* root)
-{
-    if(root==NULL)
-        return 0;
-        
-    int lh=height(root->left)+1;
-    int rh=height(root->right)+1;
-    
-return max(lh,rh);
-}
-
-void levelOrderUtil(Node *node,int level,vector<int> &temp)
-{
-    if(node==NULL)
-        return;
-        
-    if(level==1)
-        temp.push_back(node->data);
-    else if(level>1)
-    {
-        levelOrderUtil(node->left,level-1,temp);
-        levelOrderUtil(node->right,level-1,temp);
-    }
-    
-return;
-}
-
 vector<int> levelOrder(Node* node)
 {
-    int h=height(node);
     vector<int> res;
-    
-    for(int i=1;i<=h;i++)
-    {
-        vector<int> temp;
-        levelOrderUtil(node,i,temp);
         
-        for(auto it=temp.begin();it!=temp.end();it++)
-            res.push_back(*it);
+    if(!node)
+        return res;
+    
+    queue<Node*> q;
+    q.push(node);
+    
+    while(!q.empty())
+    {
+        int sz=q.size();
+        
+        for(int i=0;i<sz;i++)
+        {
+            Node *temp=q.front();
+            q.pop();
+            res.push_back(temp->data);
+            
+            if(temp->left)
+                q.push(temp->left);
+            
+            if(temp->right)
+                q.push(temp->right);
+        }
     }
     
 return res;
