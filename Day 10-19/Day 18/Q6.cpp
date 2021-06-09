@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Check if two trees are identical or not
+
 struct Node
 {
     int data;

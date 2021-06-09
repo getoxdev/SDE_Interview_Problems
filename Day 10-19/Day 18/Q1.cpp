@@ -18,6 +18,17 @@ struct Node
     }
 };
 
+int height(Node* root)
+{
+    if(root==NULL)
+        return 0;
+        
+    int lh=height(root->left)+1;
+    int rh=height(root->right)+1;
+    
+return max(lh,rh);
+}
+
 vector<int> levelOrder(Node* node)
 {
     vector<int> res;
