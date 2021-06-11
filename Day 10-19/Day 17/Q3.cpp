@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Postorder Traversal (with and without recursion)
+
 struct Node {
     int data;
     Node *left;
@@ -15,60 +17,54 @@ struct Node {
 };
 
 //Recursion
-vector<int> postOrder(Node* root)
+void postOrder(Node* root,vector<int> &v)
 {
-    vector<int> v;
     if(root==NULL)
-        return v;
+        return;
     
-    vector<int> v1=postOrder(root->left);
-    for(auto it=v1.begin();it!=v1.end();it++)
-        v.push_back(*it);
-
-    vector<int> v2=postOrder(root->right);
-    for(auto it=v2.begin();it!=v2.end();it++)
-        v.push_back(*it);
-        
+    postOrder(root->left,v);
+    postOrder(root->right,v);
     v.push_back(root->data);
 
-return v;
+return;
 }
 
 //Iteration
 vector<int> postorder(Node *root)
 {
-    stack<Node*> s;
-    vector<int> v;
-    Node *prev=NULL;
-
-    auto curr = root;
-    do{
-        while(curr!=NULL)
+    vector<int> res;
+    stack<pair<Node*,int>> s;
+    s.push({root,1});
+    
+    while(!s.empty())
+    {
+        if(s.top().second==1)
         {
-            s.push(curr);
-            //Going left
-            curr=curr->left;
+            Node *temp=s.top().first;
+            s.top().second++;
+            
+            if(temp->left)
+                s.push({temp->left,1});
         }
-
-        while(curr==NULL && !s.empty())
+        else if(s.top().second==2)
         {
-            curr=s.top();
-            if(curr->right==NULL || curr->right==prev)
-            {
-                //Going center only if right is NULL
-                v.push_back(curr->data);
-                s.pop();
-                prev=curr;
-                curr=NULL;
-            }
-            else
-                //Going right
-                curr=curr->right;
+            Node *temp=s.top().first;
+            s.top().second++;
+            
+            if(temp->right)
+                s.push({temp->right,1});
         }
-    }while(!s.empty());
-
-return v;
+        else if(s.top().second==3)
+        {
+            Node *temp=s.top().first;
+            res.push_back(temp->data);
+            s.pop();
+        }
+    }
+    
+return res;
 }
+
 int main()
 {
     boost;

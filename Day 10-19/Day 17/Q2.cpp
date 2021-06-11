@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Preorder Traversal (with and without recursion)
+
 struct Node {
     int data;
     Node *left;
@@ -15,51 +17,51 @@ struct Node {
 };
 
 //Recursion
-vector<int> preOrder(Node* root)
+void preOrder(Node* root,vector<int> &v)
 {
-    vector<int> v;
     if(root==NULL)
-        return v;
+        return;
     
     v.push_back(root->data);
-    
-    vector<int> v1=preOrder(root->left);
-    for(auto it=v1.begin();it!=v1.end();it++)
-        v.push_back(*it);
-
-    vector<int> v2=preOrder(root->right);
-    for(auto it=v2.begin();it!=v2.end();it++)
-        v.push_back(*it);
+    preOrder(root->left,v);
+    preOrder(root->right,v);
         
-return v;
+return;
 }
 
 //Iteration
 vector<int> preorder(Node *root)
 {
-    stack<Node*> s;
-    s.push(root);
-    vector<int> v;
-
+    vector<int> res;
+    stack<pair<Node*,int>> s;
+    s.push({root,1});
+    
     while(!s.empty())
     {
-        //Going center
-        auto curr=s.top();
-        s.pop();
-
-        if(curr)
+        if(s.top().second==1)
         {
-            v.push_back(curr->data);
-
-            //Going right
-            s.push(curr->right);
+            Node *temp=s.top().first;
+            s.top().second++;
             
-            //Going left
-            s.push(curr->left);
+            if(temp->left)
+                s.push({temp->left,1});
         }
+        else if(s.top().second==2)
+        {
+            Node *temp=s.top().first;
+            res.push_back(temp->data);
+            s.top().second++;
+            
+            if(temp->right)
+                s.push({temp->right,1});
+        }
+        else if(s.top().second==3)
+            s.pop();
     }
-return v;
+    
+return res;
 }
+
 int main()
 {
     boost;

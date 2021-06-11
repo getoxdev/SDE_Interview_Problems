@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Inorder Traversal (with and without recursion)
+
 struct Node {
     int data;
     Node *left;
@@ -15,52 +17,51 @@ struct Node {
 };
 
 //Recursion
-vector<int> inOrder(Node* root)
+void inOrder(Node* root,vector<int> &v)
 {
-    vector<int> v;
     if(root==NULL)
-        return v;
+        return;
     
-    v=inOrder(root->left);
-    
+    inOrder(root->left,v);
     v.push_back(root->data);
-    
-    vector<int> v1=inOrder(root->right);
-    
-    for(auto it=v1.begin();it!=v1.end();it++)
-        v.push_back(*it);
+    inOrder(root->right,v);
         
-    return v;
+return;
 }
 
-//Iteration
+//Iterative
 vector<int> inorder(Node *root)
 {
-    stack<Node*> s;
-    auto curr = root;
-    vector<int> v;
-
-    while(!s.empty() || curr!=NULL)
+    vector<int> res;
+    stack<pair<Node*,int>> s;
+    s.push({root,1});
+    
+    while(!s.empty())
     {
-        if(curr)
+        if(s.top().second==1)
         {
-            s.push(curr);
-            //Going left
-            curr=curr->left;
+            Node *temp=s.top().first;
+            res.push_back(temp->data);
+            s.top().second++;
+            
+            if(temp->left)
+                s.push({temp->left,1});
         }
-        else
+        else if(s.top().second==2)
         {
-            //Going center
-            curr=s.top();
-            v.push_back(curr->data);
+            Node *temp=s.top().first;
+            s.top().second++;
+            
+            if(temp->right)
+                s.push({temp->right,1});
+        }
+        else if(s.top().second==3)
             s.pop();
-
-            //Going right
-            curr=curr->right;
-        }
     }
-return v;
+    
+return res;
 }
+
 int main()
 {
     boost;
