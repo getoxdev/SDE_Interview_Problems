@@ -23,10 +23,10 @@ int height(Node* root)
     if(root==NULL)
         return 0;
         
-    int lh=height(root->left)+1;
-    int rh=height(root->right)+1;
+    int lh=height(root->left);
+    int rh=height(root->right);
     
-return max(lh,rh);
+return max(lh,rh)+1;
 }
 
 bool balanced(Node* root)
