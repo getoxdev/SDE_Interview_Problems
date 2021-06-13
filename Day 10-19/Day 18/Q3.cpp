@@ -26,6 +26,7 @@ int diameter(Node* root,int &ans)
     int lh = diameter(root->left,ans);
     int rh = diameter(root->right,ans);
 
+    //Largest diameter for the current node
     ans=max(ans,1+lh+rh);
     
 return max(lh,rh)+1;
@@ -34,6 +35,7 @@ return max(lh,rh)+1;
 int main()
 {
     boost;
-    int ans = INT_MAX;
+    
+    int ans = INT_MIN;
 return 0;
 }
