@@ -9,61 +9,34 @@ struct Node
   Node *left=NULL,*right=NULL,*nextRight=NULL;
 };
 
-Node* getNextRight(Node *p)
+Node* connect(Node* root) 
 {
-    Node *temp=p->nextRight;
-
-    while(temp!=NULL)
-    {
-        if(temp->left!=NULL)
-            return temp->left;
-        if(temp->right!=NULL)
-            return temp->right;
-
-        temp=temp->nextRight;
-    } 
-
-return NULL;
-}
-
-void connect(Node *p)
-{
-    Node *temp;
+    if(!root)
+        return root;
     
-    if(!p)
-        return;
-        
-    p->nextRight=NULL;
-
-    while(p!=NULL)
+    queue<Node*> q;
+    q.push(root);
+    
+    while(!q.empty())
     {
-        Node *q=p;
-
-        while(q!=NULL)
+        int sz=q.size();
+        for(int i=0;i<sz;i++)
         {
-            if(q->left)
-            {
-                if(q->right)
-                    q->left->nextRight=q->right;
-                else
-                    q->left->nextRight=getNextRight(q);
-            }
-
-            if(q->right)
-                q->right->nextRight = getNextRight(q);
-
-            q=q->nextRight;
+            Node *temp=q.front();
+            q.pop();
+            
+            if(i!=sz-1)
+                temp->nextRight=q.front();
+            
+            if(temp->left)
+                q.push(temp->left);
+            
+            if(temp->right)
+                q.push(temp->right);
         }
-
-        if(p->left)
-            p=p->left;
-        else if(p->right)
-            p=p->right;
-        else
-            p=getNextRight(p);    
     }
-
-return;
+    
+return root;  
 }
 
 int main()
