@@ -3,6 +3,7 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Find LCA of two nodes in a BST
 
 struct Node {
     int data;

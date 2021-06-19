@@ -3,6 +3,7 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Check if a Binary Tree is a BST or not
 
 struct Node {
     int data;
@@ -29,7 +30,6 @@ bool checkBST(Node *root,Node *l,Node *r)
 return checkBST(root->left,l,root) && checkBST(root->right,root,r);
 }
 
-// return true if the given tree is a BST, else return false
 bool isBST(Node* root) 
 {
     return checkBST(root,NULL,NULL);

@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Populate next right pointers of a Tree
+
 struct Node
 {
   int data;

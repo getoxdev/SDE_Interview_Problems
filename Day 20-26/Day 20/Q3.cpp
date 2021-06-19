@@ -3,6 +3,7 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Construct BST from given keys
 
 struct Node {
     int data;
@@ -15,16 +16,16 @@ struct Node {
     }
 };
 
-Node* getBST(vector<int> nums,int start,int end)
+Node* getBST(vector<int> nums,int l,int r)
 {
-    if(start>end)
+    if(l>r)
         return NULL;
     
-    int mid = start+((end-start)/2);
-    Node* root = new Node(nums[mid]);
+    int m=l+(r-l)/2;
+    Node* root = new Node(nums[m]);
     
-    root->left = getBST(nums,start,mid-1);
-    root->right = getBST(nums,mid+1,end);
+    root->left = getBST(nums,l,m-1);
+    root->right = getBST(nums,m+1,r);
     
 return root;
 }
