@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Flatten Binary Tree to LinkedList
+
 struct Node {
     int data;
     Node *left;

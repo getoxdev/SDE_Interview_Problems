@@ -3,6 +3,7 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Construct Binary Tree from inorder and postorder
 
 struct Node
 {
@@ -16,17 +17,16 @@ struct Node
     }
 };
 
-Node* getTree(int in[],int post[],int inStart,int inEnd,int* postIndex)
+Node* getTree(int in[],int post[],int inStart,int inEnd,int &postIndex)
 {
     if(inStart>inEnd)
         return NULL;
         
-    Node *root = new Node(post[*postIndex]);
-    (*postIndex)--;
+    Node *root = new Node(post[postIndex--]);
     
     if(inStart==inEnd)
         return root;
-    
+
     int inIndex;
     for(int i=inStart;i<=inEnd;i++)
     {
@@ -43,14 +43,10 @@ Node* getTree(int in[],int post[],int inStart,int inEnd,int* postIndex)
 return root;
 }
 
-// Function should construct tree and return
-// root of it.  in[] stores inorder traversal
-// post[] stores postorder traversal.  n is
-// size of these arrays
 Node *buildTree(int in[], int post[], int n) 
 {
     int postIndex=n-1;
-    Node *root=getTree(in,post,0,n-1,&postIndex);
+    Node *root=getTree(in,post,0,n-1,postIndex);
     
 return root;
 }

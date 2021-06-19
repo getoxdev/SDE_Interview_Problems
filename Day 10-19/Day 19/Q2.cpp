@@ -3,6 +3,8 @@
 #define ll long long
 #define deb(x) cout << #x << "=" << x << endl
 using namespace std;
+//Construct Binary Tree from inorder and preorder
+
 struct Node {
     int data;
     Node *left;
@@ -14,13 +16,12 @@ struct Node {
     }
 };
 
-Node* getTree(int in[],int pre[],int inStart,int inEnd,int* preIndex)
+Node* getTree(int in[],int pre[],int inStart,int inEnd,int &preIndex)
 {
     if(inStart>inEnd)
         return NULL;
         
-    Node *root = new Node(pre[*preIndex]);
-    (*preIndex)++;
+    Node *root = new Node(pre[preIndex++]);
     
     int inIndex;
     for(int i=inStart;i<=inEnd;i++)
@@ -41,7 +42,7 @@ return root;
 Node* buildTree(int in[],int pre[], int n)
 {
     int preIndex=0;
-    Node *root = getTree(in,pre,0,n-1,&preIndex);
+    Node *root = getTree(in,pre,0,n-1,preIndex);
     
 return root;
 }
