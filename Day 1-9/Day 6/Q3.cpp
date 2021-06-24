@@ -11,24 +11,39 @@ struct Node
     struct Node *next;
 };
 
-struct Node* reverseInGroups(Node *head,int k)
+Node* reverseInGroups(Node *head,int k)
 {
-    Node *prev=NULL, *curr=head, *nxt=NULL;
-    int ct=0;
-
-    while(curr!=NULL && ct<k)
+    if(head==NULL || head->next==NULL)
+        return head;
+    
+    int len=0;
+    Node *temp=head;
+    while(temp)
     {
-        nxt=curr->next;
-        curr->next=prev;
-        prev=curr;
-        curr=nxt;
-        ct++;
+        len++;
+        temp=temp->next;
     }
     
-    if(nxt!=NULL)
-        head->next=reverseInGroups(nxt,k);
+    if(len>=k)
+    {
+        int ct=0;
+        Node *prev=NULL, *curr=head, *nxt=NULL;
+        while(curr!=NULL && ct<k)
+        {
+            nxt=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nxt;
+            ct++;
+        }
 
-return prev;
+        if(nxt!=NULL)
+            head->next=reverseInGroups(nxt,k);
+
+    return prev;    
+    }
+    
+return head;
 }
 
 int main()
