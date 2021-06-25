@@ -5,48 +5,32 @@
 using namespace std;
 //Activity Selection
 
-struct activity
+static bool cmp(pair<int,int> a,pair<int,int> b)
 {
-    int start;
-    int end;
-    int pos;
-};
-
-bool comparator(struct activity m1, struct activity m2)
-{
-    return (m1.end<m2.end);
+    return a.second<b.second;
 }
 
-void activityCheck(int s[],int f[],int n)
+int maxActivity(int start[], int end[], int n)
 {
-    struct activity meet[n];
+    vector<pair<int,int>> p;
+    
     for(int i=0;i<n;i++)
+        p.push_back({start[i],end[i]});
+        
+    sort(p.begin(),p.end(),cmp);
+    
+    int ct=1,f=p[0].second;
+    
+    for(int i=1;i<p.size();i++)
     {
-        meet[i].start=s[i];
-        meet[i].end=f[i];
-        meet[i].pos=i;
-    }
-
-    sort(meet,meet+n,comparator);
-
-    vector<int> p;
-
-    p.push_back(meet[0].pos);
-    int limit=meet[0].end;
-
-    for(int i=1;i<n;i++)
-    {
-        if(meet[i].start>=limit)
+        if(p[i].first>f)
         {
-            p.push_back(meet[i].pos);
-            limit=meet[i].end;
+            ct++;
+            f=p[i].second;
         }
     }
-
-    for(auto it=p.begin();it!=p.end();it++)
-    {
-        cout<<*it<<" ";
-    }    
+    
+return ct;
 }
 
 int main()
@@ -54,17 +38,13 @@ int main()
     boost;
     int n;
     cin>>n;
-    int s[n],f[n];
+    int s[n],e[n];
     for(int i=0;i<n;i++)
-    {
         cin>>s[i];
-    }
     for(int i=0;i<n;i++)
-    {
-        cin>>f[i];
-    }
+        cin>>e[i];
 
-    activityCheck(s,f,n);
+    maxActivity(s,e,n);
     
 return 0;
 }

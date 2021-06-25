@@ -5,9 +5,45 @@
 using namespace std;
 //Job Sequencing problem
 
-bool sortInDesc(const pair<int,int> &a, const pair<int,int> &b) 
+struct Job 
 { 
-       return (a.first > b.first); 
+    int id;	 // Job Id 
+    int dead; // Deadline of job 
+    int profit; // Profit if job is over before or on deadline 
+};
+
+static bool cmp(Job a,Job b)
+{
+    return a.profit>b.profit;
+}
+
+vector<int> JobScheduling(Job a[], int n) 
+{ 
+    sort(a+0,a+n,cmp);
+    
+    int sz=0;
+    for(int i=0;i<n;i++)
+        sz=max(a[i].dead,sz);
+    
+    int d[sz+1];
+    memset(d,-1,sizeof(d));
+
+    int ans=0,ct=0;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=a[i].dead;j>=1;j--)
+        {
+            if(d[j]==-1)
+            {
+                d[j]=a[i].id;
+                ct++;
+                ans+=a[i].profit;
+                break;
+            }
+        }
+    }
+    
+return {ct,ans};
 } 
 
 int main()
@@ -15,31 +51,11 @@ int main()
     boost;
     int n;
     cin>>n;
-    int a[n],b[n],c[n];
+    Job a[n];
     for(int i=0;i<n;i++)
-    {
-        cin>>a[i]>>b[i]>>c[i];
-    }
+        cin>>a[i].id>>a[i].dead>>a[i].profit;
+    
+    vector<int> res=JobScheduling(a,n);
 
-    vector<pair<int,int>> p;
-    for(int i=0;i<n;i++)
-    {
-        p.push_back({c[i],b[i]});
-    }
-
-    sort(p.begin(),p.end(),sortInDesc);
-
-    int res,x=1,ctr=1;
-    res+=(p.begin())->first;
-    for(auto it=p.begin()+1;it!=p.end();it++)
-    {
-        if(it->second>x)
-        {
-            ctr++;
-            res+=it->first;
-        }
-    }
-
-    cout<<ctr<<" "<<res<<"\n";
 return 0;
 }

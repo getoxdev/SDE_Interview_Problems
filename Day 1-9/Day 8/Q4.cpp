@@ -5,49 +5,40 @@
 using namespace std;
 //Fractional Knapsack problem
 
-struct knapsack
-{
-    int val;
-    int wt;
-    int ratio;
+struct Item{
+    int value;
+    int weight;
 };
 
-bool comparator(struct knapsack fk1,struct knapsack fk2)
+static bool cmp(Item a,Item b)
 {
-    return (double(fk1.ratio)>double(fk2.ratio));
+    double vala=double(a.value)/double(a.weight);
+    double valb=double(b.value)/double(b.weight);
+    
+return vala>valb;
 }
 
-double fracKnapsack(int v[],int wt[],int w,int n)
+double fractionalKnapsack(int w,Item a[],int n)
 {
-    struct knapsack fk[n];
-    double ratio[n];
+    sort(a+0,a+n,cmp);
+    
+    double val=0;
     for(int i=0;i<n;i++)
     {
-        ratio[i]=double(double(v[i])/double(wt[i]));
-        fk[i].val=v[i];
-        fk[i].wt=wt[i];
-        fk[i].ratio=ratio[i];
-    }
-
-    sort(fk,fk+n,comparator);
-
-    double maxval=0;
-    for(int i=0;i<n;i++)
-    {
-        if(fk[i].wt<=w)
+        if(w>=a[i].weight)
         {
-            w-=fk[i].wt;
-            maxval+=double(fk[i].val);
+            w-=a[i].weight;
+            val+=double(a[i].value);
         }
         else
         {
-            maxval+=(double(double(w)/double(fk[i].wt)))*double(fk[i].val);
-            w-=w;
+            val+=(double(a[i].value)/double(a[i].weight))*double(w);
+            w=0;
             break;
         }
     }
-
-return maxval;
+    
+return val;
 }
 
 int main()
@@ -57,12 +48,11 @@ int main()
     cin>>w;
     int n;
     cin>>n;
-    int v[n],wt[n];
+    Item a[n];
     for(int i=0;i<n;i++)
-    {
-        cin>>v[i]>>wt[i];
-    }
+        cin>>a[i].value>>a[i].weight;
     
-    cout<<fracKnapsack(v,wt,w,n);
+    cout<<fractionalKnapsack(w,a,n);
+    
 return 0;
 }
