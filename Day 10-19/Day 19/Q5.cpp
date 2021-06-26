@@ -18,25 +18,28 @@ struct Node {
 
 void flatten(Node *root)
 {
-    if(root==NULL || root->left==NULL && root->right==NULL)
+    if(!root)
         return;
 
-    if(root->left!=NULL)
+    stack<Node*> st;
+    st.push(root);
+
+    while(!st.empty())
     {
-        flatten(root->left);
+        Node *temp=st.top();
+        st.pop();
 
-        Node *temp=root->right;
-        root->right=root->left;
-        root->left=NULL;
+        if(temp->right)
+            st.push(temp->right);
 
-        Node *t=root->right;
-        while(t->right!=NULL)
-            t=t->right;
+        if(temp->left)
+            st.push(temp->left);
 
-        t->right=temp;
+        if(!st.empty())
+            temp->right=st.top();
+            
+        temp->left=NULL;
     }
-
-    flatten(root->right);
 
 return;
 }
