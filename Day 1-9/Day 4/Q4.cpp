@@ -14,27 +14,20 @@ int main()
     for(int i=0;i<n;i++)
         cin>>a[i];
 
-    int sum=0,max_len=0;
-    map<int,int> mp;
+    int sum=0,maxLen=0;
+    unordered_map<int,int> mp;
+    mp[0]=-1;
 
     for(int i=0;i<n;i++)
     {
         sum+=a[i];
 
-        if(a[i]==0 && max_len==0)
-            max_len=1;
-
-        if(sum==0)
-            max_len=i+1;
+        if(mp.find(sum)==mp.end())
+            mp[sum]=i;
         else
-        {
-            if(mp.find(sum)!=mp.end())
-                max_len=max(i-mp[sum],max_len);
-            else
-                mp[sum]=i;
-        }
+            maxLen=max(i-mp[sum],maxLen);
     }
 
-    cout<<max_len;
+    cout<<maxLen;
 return 0;
 }
