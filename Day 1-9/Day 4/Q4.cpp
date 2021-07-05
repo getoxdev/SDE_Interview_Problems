@@ -26,11 +26,13 @@ int main()
 
         if(sum==0)
             max_len=i+1;
-
-        if(mp.find(sum)!=mp.end())
-            max_len=max(i-mp[sum],max_len);
         else
-            mp[sum]=i;
+        {
+            if(mp.find(sum)!=mp.end())
+                max_len=max(i-mp[sum],max_len);
+            else
+                mp[sum]=i;
+        }
     }
 
     cout<<max_len;
