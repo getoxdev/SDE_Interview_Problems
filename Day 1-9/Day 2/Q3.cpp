@@ -10,41 +10,29 @@ int main()
     boost;
     int n;
     cin>>n;
-    int a[n];
+    vector<int> a(n);
     for(int i=0;i<n;i++)
-    {
         cin>>a[i];
-    }
 
-    int index=0,flag=-1;
-    for(int i=n-1;i>0;i--)
+    int k,l;
+    for(k=n-2;k>=0;k--)
     {
-        if(a[i-1]<a[i])
-        {
-            flag=1;
-            index=i-1;
+        if(a[k]<a[k+1])
             break;
-        }
     }
-
-    if(flag==-1)
-    {
-        for(int i=0;i<n/2;i++)
-            swap(a[i],a[n-1-i]);
-    }
+    
+    if(k<0)
+        reverse(a.begin(),a.end());
     else
     {
-        int ind=n-1;
-        for(int i=index+1;i<n;i++)
+        for(l=n-1;l>=0;l--)
         {
-            if(a[i]>a[index])
-                ind=i;
-            else
+            if(a[l]>a[k])
                 break;
         }
-
-        swap(a[index],a[ind]);
-        sort(a+index+1,a+n);
+            
+        swap(a[l],a[k]);
+        sort(a.begin()+k+1,a.end());
     }
 
     for(int i=0;i<n;i++)
