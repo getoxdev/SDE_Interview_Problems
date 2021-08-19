@@ -13,7 +13,8 @@ void betterPascal(int n)
     {
         for(int i=0;i<=line;i++)
         {
-            if(line==i || i==0)
+            //First element and Last element in a line
+            if(i==0 || i==line)
                 a[line][i]=1;
             else
                 a[line][i]=a[line-1][i-1]+a[line-1][i];
