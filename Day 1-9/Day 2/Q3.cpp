@@ -32,7 +32,7 @@ int main()
         }
             
         swap(a[l],a[k]);
-        sort(a.begin()+k+1,a.end());
+        reverse(a.begin()+k+1,a.end());
     }
 
     for(int i=0;i<n;i++)
